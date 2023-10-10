@@ -6,12 +6,12 @@ from copy import deepcopy
 import httpx
 from bs4 import BeautifulSoup as bs
 
-from ghunt import globals as gb
-from ghunt.errors import *
-from ghunt.helpers.utils import *
-from ghunt.helpers import listener
-from ghunt.helpers.knowledge import get_domain_of_service, get_package_sig
-from ghunt.helpers.auth import *
+from gkia import globals as gb
+from gkia.errors import *
+from gkia.helpers.utils import *
+from gkia.helpers import listener
+from gkia.helpers.knowledge import get_domain_of_service, get_package_sig
+from gkia.helpers.auth import *
 
 
 async def android_master_auth(as_client: httpx.AsyncClient, oauth_token: str) -> Tuple[str, List[str], str, str]:
@@ -34,7 +34,7 @@ async def android_master_auth(as_client: httpx.AsyncClient, oauth_token: str) ->
     resp = parse_oauth_flow_response(req.text)
     for keyword in ["Token", "Email", "services", "firstName", "lastName"]:
         if keyword not in resp:
-            raise GHuntAndroidMasterAuthError(f'Expected "{keyword}" in the response of the Android Master Authentication.\nThe oauth_token may be expired.')
+            raise gkiaAndroidMasterAuthError(f'Expected "{keyword}" in the response of the Android Master Authentication.\nThe oauth_token may be expired.')
     return resp["Token"], resp["services"].split(","), resp["Email"], f'{resp["firstName"]} {resp["lastName"]}'
 
 async def android_oauth_app(as_client: httpx.AsyncClient, master_token: str,
@@ -58,7 +58,7 @@ async def android_oauth_app(as_client: httpx.AsyncClient, master_token: str,
     resp = parse_oauth_flow_response(req.text)
     for keyword in ["Expiry", "grantedScopes", "Auth"]:
         if keyword not in resp:
-            raise GHuntAndroidAppOAuth2Error(f'Expected "{keyword}" in the response of the Android App OAuth2 Authentication.\nThe master token may be revoked.')
+            raise gkiaAndroidAppOAuth2Error(f'Expected "{keyword}" in the response of the Android App OAuth2 Authentication.\nThe master token may be revoked.')
     return resp["Auth"], resp["grantedScopes"].split(" "), int(resp["Expiry"])
 
 async def gen_osids(cookies: Dict[str, str], osids: List[str]) -> Dict[str, str]:
@@ -84,7 +84,7 @@ async def gen_osids(cookies: Dict[str, str], osids: List[str]) -> Dict[str, str]
         req = httpx.post(f"https://{domain}/accounts/SetOSID", cookies=cookies, data=params, headers=headers)
 
         if not "OSID" in req.cookies:
-            raise GHuntOSIDAuthError("[-] No OSID header detected, exiting...")
+            raise gkiaOSIDAuthError("[-] No OSID header detected, exiting...")
 
         generated_osids[service] = req.cookies["OSID"]
 
@@ -122,7 +122,7 @@ async def check_master_token(as_client: httpx.AsyncClient, master_token: str) ->
     """Checks the validity of the android master token."""
     try:
         await android_oauth_app(as_client, master_token, "com.google.android.play.games", ["https://www.googleapis.com/auth/games.firstparty"])
-    except GHuntAndroidAppOAuth2Error:
+    except gkiaAndroidAppOAuth2Error:
         return False
     return True
 
@@ -131,9 +131,9 @@ async def getting_cookies_dialog(cookies: Dict[str, str]) -> Tuple[Dict[str, str
         Launch the dialog that asks the user
         how he want to generate its credentials.
     """
-    choices = ("You can facilitate configuring GHunt by using the GHunt Companion extension on Firefox, Chrome, Edge and Opera here :\n"
-                "=> https://github.com/mxrch/ghunt_companion\n\n"
-                "[1] (Companion) Put GHunt on listening mode (currently not compatible with docker)\n"
+    choices = ("You can facilitate configuring gkia by using the gkia Companion extension on Firefox, Chrome, Edge and Opera here :\n"
+                "=> https://github.com/mxrch/gkia_companion\n\n"
+                "[1] (Companion) Put gkia on listening mode (currently not compatible with docker)\n"
                 "[2] (Companion) Paste base64-encoded cookies\n"
                 "[3] Enter manually all cookies\n\n"
                 "Choice => ")

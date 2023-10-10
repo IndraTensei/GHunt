@@ -8,7 +8,7 @@ def parse_and_run():
     subparsers = parser.add_subparsers(dest="module")
 
     ### Login module
-    parser_login = subparsers.add_parser('login', help="Authenticate GHunt to Google.")
+    parser_login = subparsers.add_parser('login', help="Authenticate gkia to Google.")
     parser_login.add_argument('--clean', action='store_true', help="Clear credentials local file.")
 
     ### Email module
@@ -34,14 +34,14 @@ def process_args(args: argparse.Namespace):
     import trio
     match args.module:
         case "login":
-            from ghunt.modules import login
+            from gkia.modules import login
             trio.run(login.check_and_login, None, args.clean)
         case "email":
-            from ghunt.modules import email
+            from gkia.modules import email
             trio.run(email.hunt, None, args.email_address, args.json)
         case "gaia":
-            from ghunt.modules import gaia
+            from gkia.modules import gaia
             trio.run(gaia.hunt, None, args.gaia_id, args.json)
         case "drive":
-            from ghunt.modules import drive
+            from gkia.modules import drive
             trio.run(drive.hunt, None, args.file_id, args.json)

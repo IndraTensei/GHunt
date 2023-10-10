@@ -1,6 +1,6 @@
-from ghunt.helpers.utils import *
-from ghunt.errors import *
-from ghunt.objects.base import SmartObj
+from gkia.helpers.utils import *
+from gkia.errors import *
+from gkia.objects.base import SmartObj
 
 from typing import *
 

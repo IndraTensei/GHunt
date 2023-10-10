@@ -1,5 +1,5 @@
-from ghunt import globals as gb
-from ghunt.apis.vision import VisionHttp
+from gkia import globals as gb
+from gkia.apis.vision import VisionHttp
 
 import httpx
 import trio

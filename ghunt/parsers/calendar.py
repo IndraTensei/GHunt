@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import *
 
-from ghunt.helpers.utils import get_datetime_utc
-from ghunt.objects.apis import Parser
+from gkia.helpers.utils import get_datetime_utc
+from gkia.objects.apis import Parser
 
 
 class ConferenceProperties(Parser):

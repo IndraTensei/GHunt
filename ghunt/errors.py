@@ -1,44 +1,44 @@
-class GHuntKnowledgeError(BaseException):
+class gkiaKnowledgeError(BaseException):
     pass
 
-class GHuntCorruptedHeadersError(BaseException):
+class gkiaCorruptedHeadersError(BaseException):
     pass
 
-class GHuntUnknownVerbError(BaseException):
+class gkiaUnknownVerbError(BaseException):
     pass
 
-class GHuntUnknownRequestDataTypeError(BaseException):
+class gkiaUnknownRequestDataTypeError(BaseException):
     pass
 
-class GHuntInsufficientCreds(BaseException):
+class gkiaInsufficientCreds(BaseException):
     pass
 
-class GHuntParamsTemplateError(BaseException):
+class gkiaParamsTemplateError(BaseException):
     pass
 
-class GHuntParamsInputError(BaseException):
+class gkiaParamsInputError(BaseException):
     pass
 
-class GHuntAPIResponseParsingError(BaseException):
+class gkiaAPIResponseParsingError(BaseException):
     pass
 
-class GHuntObjectsMergingError(BaseException):
+class gkiaObjectsMergingError(BaseException):
     pass
 
-class GHuntAndroidMasterAuthError(BaseException):
+class gkiaAndroidMasterAuthError(BaseException):
     pass
 
-class GHuntAndroidAppOAuth2Error(BaseException):
+class gkiaAndroidAppOAuth2Error(BaseException):
     pass
 
-class GHuntOSIDAuthError(BaseException):
+class gkiaOSIDAuthError(BaseException):
     pass
 
-class GHuntCredsNotLoaded(BaseException):
+class gkiaCredsNotLoaded(BaseException):
     pass
 
-class GHuntNotAuthenticated(BaseException):
+class gkiaNotAuthenticated(BaseException):
     pass
 
-class GHuntInvalidTarget(BaseException):
+class gkiaInvalidTarget(BaseException):
     pass

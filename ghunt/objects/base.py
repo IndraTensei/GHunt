@@ -7,7 +7,7 @@ import base64
 
 from autoslot import Slots
 
-from ghunt import globals as gb
+from gkia import globals as gb
 
 
 class SmartObj(Slots):
@@ -18,9 +18,9 @@ class AndroidCreds(SmartObj):
         self.master_token: str = ""
         self.authorization_tokens: Dict = {}
 
-class GHuntCreds(SmartObj):
+class gkiaCreds(SmartObj):
     """
-        This object stores all the needed credentials that GHunt uses,
+        This object stores all the needed credentials that gkia uses,
         such as cookies, OSIDs, keys and tokens.
     """
     
@@ -31,10 +31,10 @@ class GHuntCreds(SmartObj):
 
         if not creds_path:
             cwd_path = Path().home()
-            ghunt_folder = cwd_path / ".malfrats/ghunt"
-            if not ghunt_folder.is_dir():
-                ghunt_folder.mkdir(parents=True, exist_ok=True)
-            creds_path = ghunt_folder / "creds.m"
+            gkia_folder = cwd_path / ".malfrats/gkia"
+            if not gkia_folder.is_dir():
+                gkia_folder.mkdir(parents=True, exist_ok=True)
+            creds_path = gkia_folder / "creds.m"
         self.creds_path: str = creds_path
 
     def are_creds_loaded(self) -> bool:

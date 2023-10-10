@@ -1,12 +1,12 @@
-from ghunt.objects.apis import GAPI
-from ghunt.objects.base import GHuntCreds
-from ghunt import globals as gb
-from ghunt.protos.playgatewaypa.search_player_pb2 import PlayerSearchProto
-from ghunt.protos.playgatewaypa.search_player_results_pb2 import PlayerSearchResultsProto
-from ghunt.protos.playgatewaypa.get_player_pb2 import GetPlayerProto
-from ghunt.protos.playgatewaypa.get_player_response_pb2 import GetPlayerResponseProto
-from ghunt.parsers.playgateway import PlayerSearchResults
-from ghunt.parsers.playgateway import PlayerProfile
+from gkia.objects.apis import GAPI
+from gkia.objects.base import gkiaCreds
+from gkia import globals as gb
+from gkia.protos.playgatewaypa.search_player_pb2 import PlayerSearchProto
+from gkia.protos.playgatewaypa.search_player_results_pb2 import PlayerSearchResultsProto
+from gkia.protos.playgatewaypa.get_player_pb2 import GetPlayerProto
+from gkia.protos.playgatewaypa.get_player_response_pb2 import GetPlayerResponseProto
+from gkia.parsers.playgateway import PlayerSearchResults
+from gkia.parsers.playgateway import PlayerProfile
 
 import httpx
 
@@ -16,7 +16,7 @@ import inspect
 
 
 class PlayGatewayPaGrpc(GAPI):
-    def __init__(self, creds: GHuntCreds, headers: Dict[str, str] = {}):
+    def __init__(self, creds: gkiaCreds, headers: Dict[str, str] = {}):
         super().__init__()
 
         # Android OAuth fields

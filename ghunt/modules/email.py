@@ -1,10 +1,10 @@
-from ghunt import globals as gb
-from ghunt.helpers.utils import get_httpx_client
-from ghunt.objects.base import GHuntCreds
-from ghunt.apis.peoplepa import PeoplePaHttp
-from ghunt.apis.vision import VisionHttp
-from ghunt.helpers import gmaps, playgames, auth, calendar as gcalendar, ia
-from ghunt.helpers.knowledge import get_user_type_definition
+from gkia import globals as gb
+from gkia.helpers.utils import get_httpx_client
+from gkia.objects.base import gkiaCreds
+from gkia.apis.peoplepa import PeoplePaHttp
+from gkia.apis.vision import VisionHttp
+from gkia.helpers import gmaps, playgames, auth, calendar as gcalendar, ia
+from gkia.helpers.knowledge import get_user_type_definition
 
 import httpx
 
@@ -15,19 +15,19 @@ async def hunt(as_client: httpx.AsyncClient, email_address: str, json_file: bool
     if not as_client:
         as_client = get_httpx_client()
  
-    ghunt_creds = GHuntCreds()
-    ghunt_creds.load_creds()
+    gkia_creds = gkiaCreds()
+    gkia_creds.load_creds()
 
-    if not ghunt_creds.are_creds_loaded():
+    if not gkia_creds.are_creds_loaded():
         exit("[-] Creds aren't loaded. Are you logged in ?")
 
-    if not auth.check_cookies(ghunt_creds.cookies):
+    if not auth.check_cookies(gkia_creds.cookies):
         exit("[-] Seems like the cookies are invalid. Exiting...")
 
     #gb.rc.print("[+] Target found !", style="sea_green3")
 
-    people_pa = PeoplePaHttp(ghunt_creds)
-    vision_api = VisionHttp(ghunt_creds)
+    people_pa = PeoplePaHttp(gkia_creds)
+    vision_api = VisionHttp(gkia_creds)
     is_found, target = await people_pa.people_lookup(as_client, email_address, params_template="max_details")
     if not is_found:
         exit("\n[-] The target wasn't found.")
@@ -106,14 +106,14 @@ async def hunt(as_client: httpx.AsyncClient, email_address: str, json_file: bool
 
     gb.rc.print("\n🎮 Play Games data", style="deep_pink2")
 
-    player_results = await playgames.search_player(ghunt_creds, as_client, email_address)
+    player_results = await playgames.search_player(gkia_creds, as_client, email_address)
     if player_results:
         player_candidate = player_results[0]
         print("\n[+] Found player profile !")
         print(f"\nUsername : {player_candidate.name}")
         print(f"Player ID : {player_candidate.id}")
         print(f"Avatar : {player_candidate.avatar_url}")
-        _, player = await playgames.get_player(ghunt_creds, as_client, player_candidate.id)
+        _, player = await playgames.get_player(gkia_creds, as_client, player_candidate.id)
         playgames.output(player)
     else:
         print("\n[-] No player profile found.")
@@ -125,7 +125,7 @@ async def hunt(as_client: httpx.AsyncClient, email_address: str, json_file: bool
 
     gb.rc.print("\n🗓️ Calendar data\n", style="slate_blue3")
 
-    cal_found, calendar, calendar_events = await gcalendar.fetch_all(ghunt_creds, as_client, email_address)
+    cal_found, calendar, calendar_events = await gcalendar.fetch_all(gkia_creds, as_client, email_address)
 
     if cal_found:
         print("[+] Public Google Calendar found !\n")
@@ -161,9 +161,9 @@ async def hunt(as_client: httpx.AsyncClient, email_address: str, json_file: bool
 
     if json_file:
         import json
-        from ghunt.objects.encoders import GHuntEncoder;
+        from gkia.objects.encoders import gkiaEncoder;
         with open(json_file, "w", encoding="utf-8") as f:
-            f.write(json.dumps(json_results, cls=GHuntEncoder, indent=4))
+            f.write(json.dumps(json_results, cls=gkiaEncoder, indent=4))
         gb.rc.print(f"\n[+] JSON output wrote to {json_file} !", style="italic")
 
     await as_client.aclose()

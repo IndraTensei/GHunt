@@ -8,11 +8,11 @@ from typing import *
 import httpx
 from alive_progress import alive_bar
 
-from ghunt import globals as gb
-from ghunt.objects.base import *
-from ghunt.helpers.utils import *
-from ghunt.objects.utils import *
-from ghunt.helpers.knowledge import get_gmaps_type_translation
+from gkia import globals as gb
+from gkia.objects.base import *
+from gkia.helpers.utils import *
+from gkia.objects.utils import *
+from gkia.helpers.knowledge import get_gmaps_type_translation
 
 
 def get_datetime(datepublished: str):
@@ -399,10 +399,10 @@ def output(err: str, stats: Dict[str, int], reviews: List[MapsReview], photos: L
                 nb += 1
 
         if unknown_trads:
-            print(f"\n⚠️ The following gmaps types haven't been found in GHunt\'s knowledge.")
+            print(f"\n⚠️ The following gmaps types haven't been found in gkia\'s knowledge.")
             for type in unknown_trads:
                 print(f"- {type}")
-            print("Please open an issue on the GHunt Github or submit a PR to add it !")
+            print("Please open an issue on the gkia Github or submit a PR to add it !")
 
     geolocator = Nominatim(user_agent="nominatim")
 

@@ -1,1 +1,1 @@
-from ghunt import globals as gb; gb.init_globals()
+from gkia import globals as gb; gb.init_globals()

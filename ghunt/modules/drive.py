@@ -1,11 +1,11 @@
-from ghunt.helpers.utils import *
-from ghunt.objects.base import DriveExtractedUser, GHuntCreds
-from ghunt.apis.drive import DriveHttp
-from ghunt.apis.clientauthconfig import ClientAuthConfigHttp
-from ghunt import globals as gb
-from ghunt.helpers import auth
-from ghunt.helpers.drive import get_comments_from_file, get_users_from_file
-from ghunt.knowledge import drive as drive_knownledge
+from gkia.helpers.utils import *
+from gkia.objects.base import DriveExtractedUser, gkiaCreds
+from gkia.apis.drive import DriveHttp
+from gkia.apis.clientauthconfig import ClientAuthConfigHttp
+from gkia import globals as gb
+from gkia.helpers import auth
+from gkia.helpers.drive import get_comments_from_file, get_users_from_file
+from gkia.knowledge import drive as drive_knownledge
 
 import httpx
 import inflection
@@ -33,16 +33,16 @@ async def hunt(as_client: httpx.AsyncClient, file_id: str, json_file: bool=None)
     if not as_client:
         as_client = get_httpx_client()
 
-    ghunt_creds = GHuntCreds()
-    ghunt_creds.load_creds()
+    gkia_creds = gkiaCreds()
+    gkia_creds.load_creds()
 
-    if not ghunt_creds.are_creds_loaded():
+    if not gkia_creds.are_creds_loaded():
         exit("[-] Creds aren't loaded. Are you logged in ?")
 
-    if not auth.check_cookies(ghunt_creds.cookies):
+    if not auth.check_cookies(gkia_creds.cookies):
         exit("[-] Seems like the cookies are invalid. Exiting...")
 
-    drive = DriveHttp(ghunt_creds)
+    drive = DriveHttp(gkia_creds)
     file_found, file = await drive.get_file(as_client, file_id)
     if not file_found:
         exit("[-] The file wasn't found.")
@@ -84,7 +84,7 @@ async def hunt(as_client: httpx.AsyncClient, file_id: str, json_file: bool=None)
     brand = None
     if file.source_app_id:
         print(f"App ID : {file.source_app_id}")
-        cac = ClientAuthConfigHttp(ghunt_creds)
+        cac = ClientAuthConfigHttp(gkia_creds)
         brand_found, brand = await cac.get_brand(as_client, file.source_app_id)
         if brand_found:
             print(f"Name : {brand.display_name}")
@@ -202,9 +202,9 @@ async def hunt(as_client: httpx.AsyncClient, file_id: str, json_file: bool=None)
         }
 
         import json
-        from ghunt.objects.encoders import GHuntEncoder;
+        from gkia.objects.encoders import gkiaEncoder;
         with open(json_file, "w", encoding="utf-8") as f:
-            f.write(json.dumps(json_results, cls=GHuntEncoder, indent=4))
+            f.write(json.dumps(json_results, cls=gkiaEncoder, indent=4))
         gb.rc.print(f"\n[+] JSON output wrote to {json_file} !", style="italic")
 
     await as_client.aclose()

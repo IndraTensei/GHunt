@@ -2,7 +2,7 @@
 
 <br>
 
-#### 🌐 GHunt Online version : https://osint.industries
+#### 🌐 gkia Online version : https://osint.industries
 
 <br>
 
@@ -10,7 +10,7 @@
 
 # 😊 Description
 
-GHunt (v2) is an offensive Google framework, designed to evolve efficiently.\
+gkia (v2) is an offensive Google framework, designed to evolve efficiently.\
 It's currently focused on OSINT, but any use related with Google is possible.
 
 Features :
@@ -28,7 +28,7 @@ Features :
 ```bash
 $ pip3 install pipx
 $ pipx ensurepath
-$ pipx install ghunt
+$ pipx install gkia
 ```
 It will automatically use venvs to avoid dependency conflicts with other projects.
 
@@ -36,32 +36,32 @@ It will automatically use venvs to avoid dependency conflicts with other project
 
 ## Login
 
-First, launch the listener by doing `ghunt login` and choose between 1 of the 2 first methods :
+First, launch the listener by doing `gkia login` and choose between 1 of the 2 first methods :
 ```bash
-$ ghunt login
+$ gkia login
 
-[1] (Companion) Put GHunt on listening mode (currently not compatible with docker)
+[1] (Companion) Put gkia on listening mode (currently not compatible with docker)
 [2] (Companion) Paste base64-encoded cookies
 [3] Enter manually all cookies
 
 Choice =>
 ```
 
-Then, use GHunt Companion to complete the login.
+Then, use gkia Companion to complete the login.
 
 The extension is available on the following stores :\
 \
-[![Firefox](https://files.catbox.moe/5g2ld5.png)](https://addons.mozilla.org/en-US/firefox/addon/ghunt-companion/)&nbsp;&nbsp;&nbsp;[![Chrome](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png)](https://chrome.google.com/webstore/detail/ghunt-companion/dpdcofblfbmmnikcbmmiakkclocadjab)
+[![Firefox](https://files.catbox.moe/5g2ld5.png)](https://addons.mozilla.org/en-US/firefox/addon/gkia-companion/)&nbsp;&nbsp;&nbsp;[![Chrome](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png)](https://chrome.google.com/webstore/detail/gkia-companion/dpdcofblfbmmnikcbmmiakkclocadjab)
 
 ## Modules
 
 Then, profit :
 ```bash
-usage: ghunt [-h] {login,email,gaia,drive} ...
+usage: gkia [-h] {login,email,gaia,drive} ...
 
 positional arguments:
   {login,email,gaia,drive}
-    login   (--clean)         Authenticate GHunt to Google.
+    login   (--clean)         Authenticate gkia to Google.
     email   (--json)          Get information on an email address.
     gaia    (--json)          Get information on a Gaia ID.
     drive   (--json)          Get information on a Drive file or folder.
@@ -73,23 +73,23 @@ options:
 📄 You can also use --json with email, gaia and drive modules to export in JSON ! Example :
 
 ```bash
-$ ghunt email <email_address> --json user_data.json
+$ gkia email <email_address> --json user_data.json
 ```
 
 **Have fun 🥰💞**
 
 # 🧑‍💻 Developers
 
-📕 I started writing some docs [here](https://github.com/mxrch/GHunt/wiki) and examples [here](https://github.com/mxrch/GHunt/tree/master/examples), feel free to contribute !
+📕 I started writing some docs [here](https://github.com/mxrch/gkia/wiki) and examples [here](https://github.com/mxrch/gkia/tree/master/examples), feel free to contribute !
 
-To use GHunt as a lib, you can't use pipx because it uses a venv.\
-So you should install GHunt with pip :
+To use gkia as a lib, you can't use pipx because it uses a venv.\
+So you should install gkia with pip :
 ```bash
-$ pip3 install ghunt
+$ pip3 install gkia
 ```
 
-And now, you should be able to `import ghunt` in your projects !\
-You can right now play with the [examples](https://github.com/mxrch/GHunt/tree/master/examples).
+And now, you should be able to `import gkia` in your projects !\
+You can right now play with the [examples](https://github.com/mxrch/gkia/tree/master/examples).
 
 # 📮 Details
 

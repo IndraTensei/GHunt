@@ -6,14 +6,14 @@ import httpx
 from typing import *
 from copy import deepcopy
 
-from ghunt.parsers.calendar import Calendar, CalendarEvents
-from ghunt.objects.base import GHuntCreds
-from ghunt.objects.utils import TMPrinter
-from ghunt.apis.calendar import CalendarHttp
+from gkia.parsers.calendar import Calendar, CalendarEvents
+from gkia.objects.base import gkiaCreds
+from gkia.objects.utils import TMPrinter
+from gkia.apis.calendar import CalendarHttp
 
 
-async def fetch_all(ghunt_creds: GHuntCreds, as_client: httpx.AsyncClient, email_address: str) -> Tuple[Boolean, Calendar, CalendarEvents]:
-    calendar_api = CalendarHttp(ghunt_creds)
+async def fetch_all(gkia_creds: gkiaCreds, as_client: httpx.AsyncClient, email_address: str) -> Tuple[Boolean, Calendar, CalendarEvents]:
+    calendar_api = CalendarHttp(gkia_creds)
     found, calendar = await calendar_api.get_calendar(as_client, email_address)
     if not found:
         return False, None, None

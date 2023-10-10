@@ -3,8 +3,8 @@ import trio
 
 import sys
 
-from ghunt.apis.peoplepa import PeoplePaHttp
-from ghunt.objects.base import GHuntCreds
+from gkia.apis.peoplepa import PeoplePaHttp
+from gkia.objects.base import gkiaCreds
 
 
 async def main():
@@ -12,14 +12,14 @@ async def main():
         exit("Please give an email address.")
     email = sys.argv[1]
 
-    ghunt_creds = GHuntCreds()
-    ghunt_creds.load_creds() # Check creds (but it doesn't crash if they are invalid)
+    gkia_creds = gkiaCreds()
+    gkia_creds.load_creds() # Check creds (but it doesn't crash if they are invalid)
 
     as_client = httpx.AsyncClient() # Async client
 
-    people_api = PeoplePaHttp(ghunt_creds)
+    people_api = PeoplePaHttp(gkia_creds)
     found, person = await people_api.people_lookup(as_client, email, params_template="just_name")
-                                                                    # You can have multiple "params_template" for the GHunt APIs,
+                                                                    # You can have multiple "params_template" for the gkia APIs,
                                                                     # for example, on this endpoint, you have "just_gaia_id" by default,
                                                                     # "just_name" or "max_details" which is used in the email CLI module.
 

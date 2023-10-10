@@ -1,8 +1,8 @@
 from typing import *
 
-from ghunt.protos.playgatewaypa.search_player_results_pb2 import PlayerSearchResultsProto
-from ghunt.protos.playgatewaypa.get_player_response_pb2 import GetPlayerResponseProto
-from ghunt.objects.apis import Parser
+from gkia.protos.playgatewaypa.search_player_results_pb2 import PlayerSearchResultsProto
+from gkia.protos.playgatewaypa.get_player_response_pb2 import GetPlayerResponseProto
+from gkia.objects.apis import Parser
 
 
 class PlayerSearchResult(Parser):
@@ -29,7 +29,7 @@ class PlayerSearchResults(Parser):
 class PlayerProfile(Parser):
     """
         This parsing is not complete at all, we only use it
-        in GHunt to dump total played games & achievements.
+        in gkia to dump total played games & achievements.
     """
     def __init__(self):
         self.achievements_count: int = 0

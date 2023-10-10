@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 
-class GHuntEncoder(json.JSONEncoder):
+class gkiaEncoder(json.JSONEncoder):
     """
         Converts non-default types when exporting to JSON.
     """

@@ -1,5 +1,5 @@
 from typing import *
-from ghunt.objects.apis import Parser
+from gkia.objects.apis import Parser
 
 
 class CacBrand(Parser):

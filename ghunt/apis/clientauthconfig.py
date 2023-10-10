@@ -1,8 +1,8 @@
-from ghunt.objects.base import GHuntCreds
-from ghunt.errors import *
-import ghunt.globals as gb
-from ghunt.objects.apis import GAPI
-from ghunt.parsers.clientauthconfig import CacBrand
+from gkia.objects.base import gkiaCreds
+from gkia.errors import *
+import gkia.globals as gb
+from gkia.objects.apis import GAPI
+from gkia.parsers.clientauthconfig import CacBrand
 
 import httpx
 
@@ -12,7 +12,7 @@ import json
 
 
 class ClientAuthConfigHttp(GAPI):
-    def __init__(self, creds: GHuntCreds, headers: Dict[str, str] = {}):
+    def __init__(self, creds: gkiaCreds, headers: Dict[str, str] = {}):
         super().__init__()
         
         if not headers:

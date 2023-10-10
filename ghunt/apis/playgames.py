@@ -1,8 +1,8 @@
-from ghunt.objects.base import GHuntCreds
-from ghunt.errors import *
-import ghunt.globals as gb
-from ghunt.objects.apis import GAPI
-from ghunt.parsers.playgames import PlayedGames, PlayerAchievements, PlayerProfile
+from gkia.objects.base import gkiaCreds
+from gkia.errors import *
+import gkia.globals as gb
+from gkia.objects.apis import GAPI
+from gkia.parsers.playgames import PlayedGames, PlayerAchievements, PlayerProfile
 
 import httpx
 
@@ -12,7 +12,7 @@ import json
 
 
 class PlayGames(GAPI):
-    def __init__(self, creds: GHuntCreds, headers: Dict[str, str] = {}):
+    def __init__(self, creds: gkiaCreds, headers: Dict[str, str] = {}):
         super().__init__()
         
         if not headers:

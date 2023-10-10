@@ -1,8 +1,8 @@
 from typing import *
 
-from ghunt.parsers.drive import DriveComment, DriveCommentList, DriveCommentReply, DriveFile
-from ghunt.objects.base import DriveExtractedUser
-from ghunt.helpers.utils import oprint # TEMP
+from gkia.parsers.drive import DriveComment, DriveCommentList, DriveCommentReply, DriveFile
+from gkia.objects.base import DriveExtractedUser
+from gkia.helpers.utils import oprint # TEMP
 
 
 def get_users_from_file(file: DriveFile) -> List[DriveExtractedUser]:

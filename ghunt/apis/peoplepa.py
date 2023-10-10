@@ -1,8 +1,8 @@
-from ghunt.objects.base import GHuntCreds
-from ghunt.errors import *
-import ghunt.globals as gb
-from ghunt.objects.apis import GAPI
-from ghunt.parsers.people import Person
+from gkia.objects.base import gkiaCreds
+from gkia.errors import *
+import gkia.globals as gb
+from gkia.objects.apis import GAPI
+from gkia.parsers.people import Person
 
 import httpx
 
@@ -12,7 +12,7 @@ import json
 
 
 class PeoplePaHttp(GAPI):
-    def __init__(self, creds: GHuntCreds, headers: Dict[str, str] = {}):
+    def __init__(self, creds: gkiaCreds, headers: Dict[str, str] = {}):
         super().__init__()
         
         if not headers:
@@ -89,7 +89,7 @@ class PeoplePaHttp(GAPI):
         }
 
         if not params_templates.get(params_template):
-            raise GHuntParamsTemplateError(f"The asked template {params_template} for the endpoint {endpoint_name} wasn't recognized by GHunt.")
+            raise gkiaParamsTemplateError(f"The asked template {params_template} for the endpoint {endpoint_name} wasn't recognized by gkia.")
 
         self._load_endpoint(endpoint_name)
         req = await self._query(as_client, verb, endpoint_name, base_url, params_templates[params_template], None, data_type)
@@ -154,7 +154,7 @@ class PeoplePaHttp(GAPI):
         }
 
         if not params_templates.get(params_template):
-            raise GHuntParamsTemplateError(f"The asked template {params_template} for the endpoint {endpoint_name} wasn't recognized by GHunt.")
+            raise gkiaParamsTemplateError(f"The asked template {params_template} for the endpoint {endpoint_name} wasn't recognized by gkia.")
 
         self._load_endpoint(endpoint_name)
         req = await self._query(as_client, verb, endpoint_name, base_url, params_templates[params_template], None, data_type)

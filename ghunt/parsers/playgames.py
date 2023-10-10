@@ -1,7 +1,7 @@
 from typing import *
 from datetime import datetime
 
-from ghunt.objects.apis import Parser
+from gkia.objects.apis import Parser
 
 
 ### Profile

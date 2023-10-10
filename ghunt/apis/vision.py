@@ -1,8 +1,8 @@
-from ghunt.objects.base import GHuntCreds
-from ghunt.errors import *
-import ghunt.globals as gb
-from ghunt.objects.apis import GAPI
-from ghunt.parsers.vision import VisionFaceDetection
+from gkia.objects.base import gkiaCreds
+from gkia.errors import *
+import gkia.globals as gb
+from gkia.objects.apis import GAPI
+from gkia.parsers.vision import VisionFaceDetection
 
 import httpx
 
@@ -12,7 +12,7 @@ import json
 
         
 class VisionHttp(GAPI):
-    def __init__(self, creds: GHuntCreds, headers: Dict[str, str] = {}):
+    def __init__(self, creds: gkiaCreds, headers: Dict[str, str] = {}):
         super().__init__()
         
         if not headers:
@@ -60,13 +60,13 @@ class VisionHttp(GAPI):
         }
 
         if not params_templates.get(params_template):
-            raise GHuntParamsTemplateError(f"The asked template {params_template} for the endpoint {endpoint_name} wasn't recognized by GHunt.")
+            raise gkiaParamsTemplateError(f"The asked template {params_template} for the endpoint {endpoint_name} wasn't recognized by gkia.")
 
         # Inputs checks
         if image_url and image_content:
-            raise GHuntParamsInputError("[Vision API faces detection] image_url and image_content can't be both put at the same time.")
+            raise gkiaParamsInputError("[Vision API faces detection] image_url and image_content can't be both put at the same time.")
         elif not image_url and not image_content:
-            raise GHuntParamsInputError("[Vision API faces detection] Please choose at least one parameter between image_url and image_content.")
+            raise gkiaParamsInputError("[Vision API faces detection] Please choose at least one parameter between image_url and image_content.")
 
         if image_url:
             params_templates["default"]["requests"][0]["image"] = {

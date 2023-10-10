@@ -13,12 +13,12 @@ import httpx
 import imagehash
 from io import BytesIO
 
-from ghunt import globals as gb
+from gkia import globals as gb
 
 
 def get_httpx_client() -> httpx.AsyncClient:
     """
-        Returns a customized to better support the needs of GHunt CLI users.
+        Returns a customized to better support the needs of gkia CLI users.
     """
     return httpx.AsyncClient(http2=True, timeout=15)
 

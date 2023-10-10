@@ -3,7 +3,7 @@ import trio
 
 import sys
 
-from ghunt.helpers.gmail import is_email_registered
+from gkia.helpers.gmail import is_email_registered
 
 
 async def main():

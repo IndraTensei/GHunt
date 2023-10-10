@@ -1,9 +1,9 @@
-from ghunt.objects.base import GHuntCreds
-from ghunt.apis.playgames import PlayGames
-from ghunt.apis.playgateway import PlayGatewayPaGrpc
-from ghunt.parsers.playgames import Player, PlayerProfile
-from ghunt.parsers.playgateway import PlayerSearchResult
-from ghunt.objects.utils import TMPrinter
+from gkia.objects.base import gkiaCreds
+from gkia.apis.playgames import PlayGames
+from gkia.apis.playgateway import PlayGatewayPaGrpc
+from gkia.parsers.playgames import Player, PlayerProfile
+from gkia.parsers.playgateway import PlayerSearchResult
+from gkia.objects.utils import TMPrinter
 
 import httpx
 from alive_progress import alive_bar
@@ -11,8 +11,8 @@ from alive_progress import alive_bar
 from typing import *
 
 
-async def get_player(ghunt_creds: GHuntCreds, as_client: httpx.AsyncClient, player_id: str):
-    playgames = PlayGames(ghunt_creds)
+async def get_player(gkia_creds: gkiaCreds, as_client: httpx.AsyncClient, player_id: str):
+    playgames = PlayGames(gkia_creds)
 
     tmprinter = TMPrinter()
     tmprinter.out("[~] Getting player profile...")
@@ -21,7 +21,7 @@ async def get_player(ghunt_creds: GHuntCreds, as_client: httpx.AsyncClient, play
     if not is_found or not player_profile.profile_settings.profile_visible:
         return is_found, Player()
     
-    playgateway_pa = PlayGatewayPaGrpc(ghunt_creds)
+    playgateway_pa = PlayGatewayPaGrpc(gkia_creds)
     player_stats = await playgateway_pa.get_player_stats(as_client, player_id)
 
     with alive_bar(player_stats.played_games_count, title="🚎 Fetching played games...", receipt=False) as bar:
@@ -43,8 +43,8 @@ async def get_player(ghunt_creds: GHuntCreds, as_client: httpx.AsyncClient, play
     player = Player(player_profile, played_games.games, achievements.achievements)
     return is_found, player
 
-async def search_player(ghunt_creds: GHuntCreds, as_client: httpx.AsyncClient, query: str) -> List[PlayerSearchResult]:
-    playgateway_pa = PlayGatewayPaGrpc(ghunt_creds)
+async def search_player(gkia_creds: gkiaCreds, as_client: httpx.AsyncClient, query: str) -> List[PlayerSearchResult]:
+    playgateway_pa = PlayGatewayPaGrpc(gkia_creds)
     player_search_results = await playgateway_pa.search_player(as_client, query)
     return player_search_results.results
 

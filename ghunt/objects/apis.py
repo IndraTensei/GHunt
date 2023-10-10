@@ -1,9 +1,9 @@
-from ghunt.errors import GHuntCorruptedHeadersError
-from ghunt.helpers.knowledge import get_origin_of_key, get_api_key
-from ghunt.objects.base import GHuntCreds, SmartObj
-from ghunt.helpers.utils import *
-from ghunt.errors import *
-from ghunt.helpers.auth import *
+from gkia.errors import gkiaCorruptedHeadersError
+from gkia.helpers.knowledge import get_origin_of_key, get_api_key
+from gkia.objects.base import gkiaCreds, SmartObj
+from gkia.helpers.utils import *
+from gkia.errors import *
+from gkia.helpers.auth import *
 
 import httpx
 import trio
@@ -22,7 +22,7 @@ class EndpointConfig(SmartObj):
 class GAPI(SmartObj):
     def __init__(self):
         self.loaded_endpoints: Dict[str, EndpointConfig] = {}
-        self.creds: GHuntCreds = None
+        self.creds: gkiaCreds = None
         self.headers: Dict[str, str] = {}
         self.cookies: Dict[str, str] = {}
         self.gen_token_lock: trio.Lock = None
@@ -31,12 +31,12 @@ class GAPI(SmartObj):
         self.require_key: str = ""
         self.key_origin: str = ""
 
-    def _load_api(self, creds: GHuntCreds, headers: Dict[str, str]):
+    def _load_api(self, creds: gkiaCreds, headers: Dict[str, str]):
         if not creds.are_creds_loaded():
-            raise GHuntInsufficientCreds(f"This API requires a loaded GHuntCreds object, but it is not.")
+            raise gkiaInsufficientCreds(f"This API requires a loaded gkiaCreds object, but it is not.")
 
         if not is_headers_syntax_good(headers):
-            raise GHuntCorruptedHeadersError(f"The provided headers when loading the endpoint seems corrupted, please check it : {headers}")
+            raise gkiaCorruptedHeadersError(f"The provided headers when loading the endpoint seems corrupted, please check it : {headers}")
 
         if self.authentication_mode == "oauth":
             self.gen_token_lock = trio.Lock()
@@ -44,18 +44,18 @@ class GAPI(SmartObj):
         cookies = {}
         if self.authentication_mode in ["sapisidhash", "cookies_only"]:
             if not (cookies := creds.cookies):
-                raise GHuntInsufficientCreds(f"This endpoint requires the cookies in the GHuntCreds object, but they aren't loaded.")
+                raise gkiaInsufficientCreds(f"This endpoint requires the cookies in the gkiaCreds object, but they aren't loaded.")
 
         if (key_name := self.require_key):
             if not (api_key := get_api_key(key_name)):
-                raise GHuntInsufficientCreds(f"This API requires the {key_name} API key in the GHuntCreds object, but it isn't loaded.")
+                raise gkiaInsufficientCreds(f"This API requires the {key_name} API key in the gkiaCreds object, but it isn't loaded.")
             if not self.key_origin:
                 self.key_origin = get_origin_of_key(key_name)
             headers = {**headers, "X-Goog-Api-Key": api_key, **headers, "Origin": self.key_origin, "Referer": self.key_origin}
 
         if self.authentication_mode == "sapisidhash":
             if not (sapisidhash := creds.cookies.get("SAPISID")):
-                raise GHuntInsufficientCreds(f"This endpoint requires the SAPISID cookie in the GHuntCreds object, but it isn't loaded.")
+                raise gkiaInsufficientCreds(f"This endpoint requires the SAPISID cookie in the gkiaCreds object, but it isn't loaded.")
 
             headers = {**headers, "Authorization": f"SAPISIDHASH {gen_sapisidhash(sapisidhash, self.key_origin)}"}
 
@@ -76,11 +76,11 @@ class GAPI(SmartObj):
             headers = {**headers, **ext_bin_headers}
         
         if not is_headers_syntax_good(headers):
-            raise GHuntCorruptedHeadersError(f"The provided headers when loading the endpoint seems corrupted, please check it : {headers}")
+            raise gkiaCorruptedHeadersError(f"The provided headers when loading the endpoint seems corrupted, please check it : {headers}")
 
         self.loaded_endpoints[endpoint_name] = EndpointConfig(headers, self.cookies)
 
-    async def _check_and_gen_authorization_token(self, as_client: httpx.AsyncClient, creds: GHuntCreds):
+    async def _check_and_gen_authorization_token(self, as_client: httpx.AsyncClient, creds: gkiaCreds):
         async with self.gen_token_lock:
             present = False
             if self.api_name in creds.android.authorization_tokens:
@@ -117,9 +117,9 @@ class GAPI(SmartObj):
                 req = await as_client.post(f"{self.scheme}://{self.hostname}{base_url}",
                     params=params, json=data, headers=headers, cookies=endpoint.cookies)
             else:
-                raise GHuntUnknownRequestDataTypeError(f"The provided data type {data_type} wasn't recognized by GHunt.")
+                raise gkiaUnknownRequestDataTypeError(f"The provided data type {data_type} wasn't recognized by gkia.")
         else:
-            raise GHuntUnknownVerbError(f"The provided verb {verb} wasn't recognized by GHunt.")
+            raise gkiaUnknownVerbError(f"The provided verb {verb} wasn't recognized by gkia.")
 
         return req
 
@@ -147,6 +147,6 @@ class Parser(SmartObj):
         class_name = get_class_name(self)
         module_name = self.__module__
         if not get_class_name(obj).startswith(class_name):
-            raise GHuntObjectsMergingError("The two objects being merged aren't from the same class.")
+            raise gkiaObjectsMergingError("The two objects being merged aren't from the same class.")
 
         self = recursive_merge(self, obj, module_name)

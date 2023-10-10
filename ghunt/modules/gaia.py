@@ -1,10 +1,10 @@
-from ghunt import globals as gb
-from ghunt.objects.base import GHuntCreds
-from ghunt.apis.peoplepa import PeoplePaHttp
-from ghunt.apis.vision import VisionHttp
-from ghunt.helpers import gmaps, auth, ia
-from ghunt.helpers.knowledge import get_user_type_definition
-from ghunt.helpers.utils import get_httpx_client
+from gkia import globals as gb
+from gkia.objects.base import gkiaCreds
+from gkia.apis.peoplepa import PeoplePaHttp
+from gkia.apis.vision import VisionHttp
+from gkia.helpers import gmaps, auth, ia
+from gkia.helpers.knowledge import get_user_type_definition
+from gkia.helpers.utils import get_httpx_client
 
 import httpx
 
@@ -15,16 +15,16 @@ async def hunt(as_client: httpx.AsyncClient, gaia_id: str, json_file: bool=None)
     if not as_client:
         as_client = get_httpx_client()
 
-    ghunt_creds = GHuntCreds()
-    ghunt_creds.load_creds()
+    gkia_creds = gkiaCreds()
+    gkia_creds.load_creds()
 
-    if not auth.check_cookies(ghunt_creds.cookies):
+    if not auth.check_cookies(gkia_creds.cookies):
         exit("[-] Seems like the cookies are invalid. Exiting...")
 
     #gb.rc.print("\n[+] Target found !", style="spring_green3")
 
-    people_pa = PeoplePaHttp(ghunt_creds)
-    vision_api = VisionHttp(ghunt_creds)
+    people_pa = PeoplePaHttp(gkia_creds)
+    vision_api = VisionHttp(gkia_creds)
     is_found, target = await people_pa.people(as_client, gaia_id, params_template="max_details")
     if not is_found:
         exit("\n[-] The target wasn't found.")
@@ -118,9 +118,9 @@ async def hunt(as_client: httpx.AsyncClient, gaia_id: str, json_file: bool=None)
     
     if json_file:
         import json
-        from ghunt.objects.encoders import GHuntEncoder;
+        from gkia.objects.encoders import gkiaEncoder;
         with open(json_file, "w", encoding="utf-8") as f:
-            f.write(json.dumps(json_results, cls=GHuntEncoder, indent=4))
+            f.write(json.dumps(json_results, cls=gkiaEncoder, indent=4))
         gb.rc.print(f"\n[+] JSON output wrote to {json_file} !", style="italic")
 
     await as_client.aclose()

@@ -1,9 +1,9 @@
-from ghunt.objects.base import GHuntCreds
-from ghunt.errors import *
-import ghunt.globals as gb
-from ghunt.objects.apis import GAPI
-from ghunt.parsers.drive import DriveCommentList, DriveFile, DriveChildList
-from ghunt.knowledge import drive as drive_knowledge
+from gkia.objects.base import gkiaCreds
+from gkia.errors import *
+import gkia.globals as gb
+from gkia.objects.apis import GAPI
+from gkia.parsers.drive import DriveCommentList, DriveFile, DriveChildList
+from gkia.knowledge import drive as drive_knowledge
 
 import httpx
 
@@ -13,7 +13,7 @@ import json
 
 
 class DriveHttp(GAPI):
-    def __init__(self, creds: GHuntCreds, headers: Dict[str, str] = {}):
+    def __init__(self, creds: gkiaCreds, headers: Dict[str, str] = {}):
         super().__init__()
         
         if not headers:
